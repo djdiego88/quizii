@@ -81,6 +81,20 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+
+  --ion-color-facebook: #3b5998;
+  --ion-color-facebook-rgb: 59,89,152;
+  --ion-color-facebook-contrast: #ffffff;
+  --ion-color-facebook-contrast-rgb: 255,255,255;
+  --ion-color-facebook-shade: #344e86;
+  --ion-color-facebook-tint: #4f6aa2;
+
+  --ion-color-google: #ea4335;
+  --ion-color-google-rgb: 234,67,53;
+  --ion-color-google-contrast: #ffffff;
+  --ion-color-google-contrast-rgb: 255,255,255;
+  --ion-color-google-shade: #ce3b2f;
+  --ion-color-google-tint: #ec5649;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -152,6 +166,20 @@
     --ion-color-light-contrast-rgb: 255,255,255;
     --ion-color-light-shade: #1e2023;
     --ion-color-light-tint: #383a3e;
+
+    --ion-color-facebook: #3b5998;
+    --ion-color-facebook-rgb: 59,89,152;
+    --ion-color-facebook-contrast: #ffffff;
+    --ion-color-facebook-contrast-rgb: 255,255,255;
+    --ion-color-facebook-shade: #344e86;
+    --ion-color-facebook-tint: #4f6aa2;
+
+    --ion-color-google: #ea4335;
+    --ion-color-google-rgb: 234,67,53;
+    --ion-color-google-contrast: #ffffff;
+    --ion-color-google-contrast-rgb: 255,255,255;
+    --ion-color-google-shade: #ce3b2f;
+    --ion-color-google-tint: #ec5649;
   }
 
   /*

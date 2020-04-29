@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "180578467477",
+    "firebase_url": "https://quiziiapp.firebaseio.com",
+    "project_id": "quiziiapp",
+    "storage_bucket": "quiziiapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:180578467477:android:d004702d55fe61af06a59c",
+        "android_client_info": {
+          "package_name": "co.app.quizii"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "180578467477-i63o3j5tif7vhrhnqjttu71bb2bfe762.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "co.app.quizii",
+            "certificate_hash": "967c37f5728c27cb2c34f27e87dd161b9e0b08e0"
+          }
+        },
+        {
+          "client_id": "180578467477-nga7p4qt36qn552h4dggsqfet3m0le6i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCglWPk9VAC0UgAnYr0du80fBcJH0LfgfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "180578467477-nga7p4qt36qn552h4dggsqfet3m0le6i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

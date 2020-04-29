@@ -1,4 +1,4 @@
-package io.ionic.starter;
+package co.app.quizii;
 
 import android.os.Bundle;
 

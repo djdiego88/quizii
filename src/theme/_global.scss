@@ -1,4 +1,9 @@
 /** Typography **/
+html,
+body {
+    letter-spacing: normal !important;
+}
+
 h1,
 h2,
 h3,
@@ -9,44 +14,77 @@ h6 {
 }
 
 .text-size-xsmall {
-    font-size: 0.625rem;//10px
+    font-size: 0.625rem !important;//10px
 }
 
 .text-size-small {
-    font-size: 0.75rem;//12px
+    font-size: 0.75rem !important;//12px
 }
 
 .text-size-medium {
-    font-size: 0.875rem;//14px
+    font-size: 0.875rem !important;//14px
 }
 
 .text-size-large {
-    font-size: 1rem;//16px
+    font-size: 1rem !important;//16px
 }
 
 .text-weight-300 {
-    font-weight: 300;
+    font-weight: 300 !important;
 }
 
 .text-weight-400 {
-    font-weight: 400;
+    font-weight: 400 !important;
 }
 
 .text-weight-500 {
-    font-weight: 500;
+    font-weight: 500 !important;
 }
 
 .text-weight-600 {
-    font-weight: 600;
+    font-weight: 600 !important;
 }
 
 .text-weight-700 {
-    font-weight: 700;
+    font-weight: 700 !important;
 }
 
 .text-weight-800 {
-    font-weight: 800;
+    font-weight: 800 !important;
 }
 .text-weight-900 {
-    font-weight: 900;
+    font-weight: 900 !important;
+}
+.text-uppercase {
+    text-transform: uppercase !important;
+}
+.text-normal {
+    text-transform: none !important;
+}
+
+.ion-color-facebook {
+    --ion-color-base: var(--ion-color-facebook);
+    --ion-color-base-rgb: var(--ion-color-facebook-rgb);
+    --ion-color-contrast: var(--ion-color-facebook-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-facebook-contrast-rgb);
+    --ion-color-shade: var(--ion-color-facebook-shade);
+    --ion-color-tint: var(--ion-color-facebook-tint);
+}
+
+.ion-color-google {
+    --ion-color-base: var(--ion-color-google);
+    --ion-color-base-rgb: var(--ion-color-google-rgb);
+    --ion-color-contrast: var(--ion-color-google-contrast);
+    --ion-color-contrast-rgb: var(--ion-color-google-contrast-rgb);
+    --ion-color-shade: var(--ion-color-google-shade);
+    --ion-color-tint: var(--ion-color-google-tint);
+}
+
+ion-app,
+ion-content,
+ion-grid,
+ion-row,
+ion-col,
+ion-button {
+    letter-spacing: normal !important;
 }

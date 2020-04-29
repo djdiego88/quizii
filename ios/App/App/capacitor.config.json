@@ -1,1 +1,8 @@
-{}
+{
+  "appId": "co.app.quizii",
+  "appName": "quizii",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {}
+}
