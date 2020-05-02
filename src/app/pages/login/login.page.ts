@@ -24,10 +24,19 @@ export class LoginPage implements OnInit {
       message: 'Please wait...'
     });
     this.presentLoading(loading);
-    this.auth.doFacebookLogin().then(userCredential => {
-      console.log(userCredential);
-      loading.dismiss();
+    const userCredential = await this.auth.doFacebookLogin();
+    console.log(userCredential);
+    loading.dismiss();
+  }
+
+  async doGoogleLogin() {
+    const loading = await this.loadingController.create({
+      message: 'Please wait...'
     });
+    this.presentLoading(loading);
+    const userCredential = await this.auth.doGoogleLogin();
+    console.log(userCredential);
+    loading.dismiss();
   }
 
   doLogout() {
