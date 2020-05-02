@@ -8,11 +8,11 @@
         <h1>Quizii</h1>
         <p class="ion-no-margin text-size-medium text-weight-500">We recommend using Facebook or Google so you can play against your friends</p>
 
-        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal">
+        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" (click)="doFacebookLogin()">
           <ion-icon slot="start" src="https://api.iconify.design/ion-logo-facebook.svg"></ion-icon>
           Login in with Facebook
         </ion-button>
-        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal">
+        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" (click)="doLogout()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           Login in with Google
         </ion-button>

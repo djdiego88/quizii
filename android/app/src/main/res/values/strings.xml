@@ -4,4 +4,6 @@
     <string name="title_activity_main">quizii</string>
     <string name="package_name">co.app.quizii</string>
     <string name="custom_url_scheme">co.app.quizii</string>
+    <string name="facebook_app_id">234861171205802</string>
+    <string name="fb_login_protocol_scheme">fb234861171205802</string>
 </resources>
