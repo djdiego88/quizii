@@ -7,6 +7,8 @@ import com.getcapacitor.Plugin;
 
 import java.util.ArrayList;
 
+import com.whitestein.securestorage.SecureStoragePlugin;
+
 public class MainActivity extends BridgeActivity {
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -18,6 +20,7 @@ public class MainActivity extends BridgeActivity {
       // Ex: add(TotallyAwesomePlugin.class);
       add(jp.rdlabo.capacitor.plugin.facebook.FacebookLogin.class);
       add(GoogleAuth.class);
+      add(SecureStoragePlugin.class);
     }});
   }
 }

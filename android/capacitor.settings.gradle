@@ -7,3 +7,6 @@ project(':codetrix-studio-capacitor-google-auth').projectDir = new File('../node
 
 include ':rdlabo-capacitor-facebook-login'
 project(':rdlabo-capacitor-facebook-login').projectDir = new File('../node_modules/@rdlabo/capacitor-facebook-login/android/@rdlabo/capacitor-facebook-login')
+
+include ':capacitor-secure-storage-plugin'
+project(':capacitor-secure-storage-plugin').projectDir = new File('../node_modules/capacitor-secure-storage-plugin/android')

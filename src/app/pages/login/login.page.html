@@ -6,21 +6,28 @@
           <ion-img [src]="'https://via.placeholder.com/100?text=Quizii'"></ion-img>
         </ion-thumbnail>
         <h1>Quizii</h1>
-        <p class="ion-no-margin text-size-medium text-weight-500">We recommend using Facebook or Google so you can play against your friends</p>
+        <p class="ion-no-margin ion-margin-bottom text-size-medium text-weight-600">We recommend using Facebook or Google so you can play against your friends</p>
 
-        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" (click)="doFacebookLogin()">
+        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doFacebookLogin()">
           <ion-icon slot="start" name="logo-facebook"></ion-icon>
           Login in with Facebook
         </ion-button>
-        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" (click)="doGoogleLogin()">
+        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doGoogleLogin()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           Login in with Google
         </ion-button>
+        <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" mode="md" (click)="loginModal()">
+          <ion-icon slot="start" name="mail"></ion-icon>
+          Login in with Email
+        </ion-button>
         <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" (click)="doLogout()">
-          <ion-icon slot="start" name="exit-outline"></ion-icon>
+          <ion-icon slot="start" name="exit"></ion-icon>
           Logout
         </ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
+<ion-footer class="ion-no-border">
+  <ion-button expand="full" class="btn-full-footer btn-transparent text-size-small text-weight-600 text-normal" mode="md">Create an account</ion-button>
+</ion-footer>

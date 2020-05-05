@@ -11,6 +11,7 @@ apply from: "../capacitor-cordova-android-plugins/cordova.variables.gradle"
 dependencies {
     implementation project(':codetrix-studio-capacitor-google-auth')
     implementation project(':rdlabo-capacitor-facebook-login')
+    implementation project(':capacitor-secure-storage-plugin')
 
 }
 

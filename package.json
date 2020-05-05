@@ -31,6 +31,7 @@
     "@ionic/lab": "^3.1.3",
     "@ionic/pwa-elements": "^1.5.2",
     "@rdlabo/capacitor-facebook-login": "^2.0.2",
+    "capacitor-secure-storage-plugin": "^0.4.0",
     "core-js": "^2.5.4",
     "firebase": "^7.14.2",
     "rxjs": "~6.5.1",

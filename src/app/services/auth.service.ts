@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from "@angular/core";
+import { Injectable, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
@@ -6,8 +6,9 @@ import '@firebase/auth';
 import { Plugins } from '@capacitor/core';
 import { FacebookLoginResponse } from '@rdlabo/capacitor-facebook-login';
 import '@codetrix-studio/capacitor-google-auth';
+import 'capacitor-secure-storage-plugin';
 import { BehaviorSubject } from 'rxjs';
-const { FacebookLogin, GoogleAuth  } = Plugins;
+const { FacebookLogin, GoogleAuth, SecureStoragePlugin  } = Plugins;
 
 @Injectable({
   providedIn: 'root'
@@ -73,15 +74,23 @@ export class AuthService {
   }*/
 
   async doLogout(): Promise<void> {
+    const key = 'authProvider';
     if (this.platform.is('hybrid')) {
       try {
-        await FacebookLogin.logout(); // Unauth with Facebook
+        const authProvider = await SecureStoragePlugin.get({ key });
+        if (authProvider && authProvider.value === 'facebook') {
+          await FacebookLogin.logout(); // Unauth with Facebook
+        } else if (authProvider && authProvider.value === 'google') {
+          await GoogleAuth.signOut(); // Unauth with Google
+        }
+        await SecureStoragePlugin.remove({ key });
         await this.auth.signOut(); // Unauth with Firebase
       } catch (err) {
         console.log(err);
       }
     } else {
       try {
+        await SecureStoragePlugin.remove({ key });
         await this.auth.signOut();
       } catch (err) {
         console.log(err);
@@ -104,8 +113,10 @@ export class AuthService {
               // Sign in with the credential from the Facebook user.
               this.auth.signInWithCredential(facebookCredential)
                 .then(response => {
-                  // console.log(response);
-                  resolve(response);
+                  const key = 'authProvider';
+                  const value = 'facebook';
+                  SecureStoragePlugin.set({ key, value })
+                    .then(success => resolve(response));
                 })
                 .catch(error => {
                   reject(error);
@@ -130,8 +141,10 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       const provider = new firebase.auth.FacebookAuthProvider();
       this.auth.signInWithPopup(provider).then(result => {
-        // console.log(result);
-        resolve(result);
+        const key = 'authProvider';
+        const value = 'facebook';
+        SecureStoragePlugin.set({ key, value })
+          .then(success => resolve(result));
       }).catch(error => {
         console.log(error);
         reject(error);
@@ -171,8 +184,10 @@ export class AuthService {
               // Sign in with the credential from the Google user.
               this.auth.signInWithCredential(googleCredential)
                 .then(response => {
-                  // console.log(response);
-                  resolve(response);
+                  const key = 'authProvider';
+                  const value = 'google';
+                  SecureStoragePlugin.set({ key, value })
+                    .then(success => resolve(response));
                 })
                 .catch(error => {
                   reject(error);
@@ -197,8 +212,10 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       const provider = new firebase.auth.GoogleAuthProvider();
       this.auth.signInWithPopup(provider).then(result => {
-        // console.log(result);
-        resolve(result);
+        const key = 'authProvider';
+        const value = 'google';
+        SecureStoragePlugin.set({ key, value })
+          .then(success => resolve(result));
       }).catch(error => {
         console.log(error);
         reject(error);

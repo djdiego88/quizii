@@ -88,3 +88,88 @@ ion-col,
 ion-button {
     letter-spacing: normal !important;
 }
+
+ion-header ion-toolbar {
+    --min-height: 32px !important;
+
+    ion-buttons {
+        min-height: 26px;
+
+        ion-button {
+            height: 24px !important;
+            @extend .text-size-small;
+            @extend .text-normal; 
+            @extend .text-weight-500;
+        }
+    }
+
+    ion-title {
+        @extend .text-weight-700;
+        @extend .text-size-medium;
+
+        &.long-title {
+            padding-left: 44px;
+            padding-right: 44px;
+        }
+    }
+}
+
+.error-message {
+  color: red;
+  margin-left: 10px;
+  margin-top: 10px;
+  @extend .text-size-small;
+}
+
+.btn-full-footer {
+    --border-radius: 0;
+    --box-shadow: none;
+    --color: #fff;
+    margin: 0;
+
+    &.btn-transparent {
+        --background: rgba(0,0,0,0.6);
+    }
+}
+
+ion-content {
+    &.fullscreen-bg {
+        --background: url(https://i.picsum.photos/id/1019/5472/3648.jpg) no-repeat center/cover fixed;
+        --color: #fff;
+    }
+}
+
+/** FORMS **/
+
+form {
+    ion-item {
+        @extend .text-size-medium;
+        --padding-start: 8px;
+        --padding-end: 8px;
+        --min-height: 36px;
+        --inner-padding-end: 8px;
+
+        ion-icon {
+            &[slot="start"] {
+                margin: 6px 0 6px 0;
+                margin-inline-end: 8px;
+            }
+        }
+
+        ion-input {
+            --padding-bottom: 4px !important;
+            --padding-top: 4px !important;
+        }
+    }
+}
+
+.full-white-box {
+    margin-top: 1rem;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background-color: #fff;
+
+    ion-item {
+        --ion-item-background: #fff;
+    }
+}
