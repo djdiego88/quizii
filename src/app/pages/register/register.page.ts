@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
-import { LoginModalPage } from './login-modal/login-modal.page';
+import { RegisterModalPage } from './register-modal/register-modal.page';
 import { Router } from '@angular/router';
 import { Plugins } from '@capacitor/core';
 import { ErrorService } from './../../services/error.service';
@@ -8,11 +8,11 @@ import { AuthService } from './../../services/auth.service';
 const { Toast } = Plugins;
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.page.html',
-  styleUrls: ['./login.page.scss'],
+  selector: 'app-register',
+  templateUrl: './register.page.html',
+  styleUrls: ['./register.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class RegisterPage implements OnInit {
 
   constructor(
     public loadingController: LoadingController,
@@ -25,38 +25,39 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  async doFacebookLogin() {
+  async doFacebookRegister() {
     const loading = await this.loadingController.create({
-      message: 'Logging in on Quizii...'
+      message: 'Signing up on Quizii...'
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doFacebookAuth(true);
+      const userCredential = await this.auth.doFacebookAuth(false);
       console.log(userCredential);
       //this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
-      if (error.message === 'user_not_registered' || error.message === 'user_disabled') {
+      if (error.message === 'user_already_registered' || error.message === 'user_disabled') {
         await this.showToast(this.error.getErrorMessage(error.message));
       }
     }
     loading.dismiss();
   }
 
-  async doGoogleLogin() {
+  async doGoogleRegister() {
     const loading = await this.loadingController.create({
-      message: 'Logging in on Quizii...'
+      message: 'Signing up on Quizii...'
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doGoogleAuth(true);
+      const userCredential = await this.auth.doGoogleAuth(false);
       console.log(userCredential);
       //this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
-      if (error.message === 'user_not_registered' || error.message === 'user_disabled') {
+      if (error.message === 'user_already_registered' || error.message === 'user_disabled') {
+        console.log('error: ', error.message);
         await this.showToast(this.error.getErrorMessage(error.message));
       }
     }
@@ -72,9 +73,9 @@ export class LoginPage implements OnInit {
     });
   }
 
-  async loginModal() {
+  async registerModal() {
     const modal = await this.modalController.create({
-      component: LoginModalPage
+      component: RegisterModalPage
     });
     return await modal.present();
   }

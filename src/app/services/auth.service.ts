@@ -1,5 +1,3 @@
-import { UtilitiesService } from './utilities.service';
-import { UserService } from './user.service';
 import { Injectable, NgZone } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -12,6 +10,10 @@ import 'capacitor-secure-storage-plugin';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../interfaces/user';
 import { first } from 'rxjs/operators';
+import { UtilitiesService } from './utilities.service';
+import { UserService } from './user.service';
+import { PhotoService } from './photo.service';
+import { Avatar } from './../interfaces/avatar';
 const { FacebookLogin, GoogleAuth, SecureStoragePlugin  } = Plugins;
 
 @Injectable({
@@ -27,6 +29,7 @@ export class AuthService {
     private zone: NgZone,
     public user: UserService,
     public utilities: UtilitiesService,
+    private photo: PhotoService
   ) { }
 
   init(): void {
@@ -38,23 +41,18 @@ export class AuthService {
     });
   }
 
-  async doLogin(value): Promise<any> {
+  async doLogin(value): Promise<firebase.auth.UserCredential> {
     try {
       const userCredential = await this.auth.signInWithEmailAndPassword(value.email, value.password);
+      await SecureStoragePlugin.set({ key: 'authProvider', value: 'password' });
       await this.loginUser(userCredential);
       return userCredential;
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
-    /*return new Promise<any>((resolve, reject) => {
-      this.auth.signInWithEmailAndPassword(value.email, value.password)
-      .then(
-        res => resolve(res),
-        err => reject(err));
-    });*/
   }
 
-  async doFacebookLogin(): Promise<any> {
+  async doFacebookAuth(login?: boolean): Promise<firebase.auth.UserCredential> {
     try {
       let userCredential: any;
       if (this.platform.is('hybrid')) {
@@ -62,27 +60,13 @@ export class AuthService {
       } else {
         userCredential = await this.browserFacebookAuth();
       }
-      if (userCredential && userCredential instanceof Object && userCredential.user) {
-        await this.loginUser(userCredential);
-        return userCredential;
-      }
+      return await this.redirectLoginUser(userCredential, login);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
-    /*return new Promise<any>((resolve, reject) => {
-      if (this.platform.is('hybrid')) {
-        this.nativeFacebookAuth()
-          .then(result => resolve(result))
-          .catch(error => reject(error));
-      } else {
-        this.browserFacebookAuth()
-          .then(result => resolve(result))
-          .catch(error => reject(error));
-      }
-    });*/
   }
 
-  async doGoogleLogin(): Promise<any> {
+  async doGoogleAuth(login?: boolean): Promise<firebase.auth.UserCredential> {
     try {
       let userCredential: any;
       if (this.platform.is('hybrid')) {
@@ -90,29 +74,22 @@ export class AuthService {
       } else {
         userCredential = await this.browserGoogleAuth();
       }
-      if (userCredential && userCredential instanceof Object && userCredential.user) {
-        await this.loginUser(userCredential);
-        return userCredential;
-      }
+      return await this.redirectLoginUser(userCredential, login);
     } catch (error) {
-      throw new Error(error);
+      throw error;
     }
-    /*return new Promise<any>((resolve, reject) => {
-      if (this.platform.is('hybrid')) {
-        this.nativeGoogleAuth()
-          .then(result => resolve(result))
-          .catch(error => reject(error));
-      } else {
-        this.browserGoogleAuth()
-          .then(result => resolve(result))
-          .catch(error => reject(error));
-      }
-    });*/
   }
 
-  /*doRegister(value) {
-
-  }*/
+  async doRegister(value): Promise<firebase.auth.UserCredential> {
+    try {
+      const userCredential = await this.auth.createUserWithEmailAndPassword(value.email, value.password);
+      await SecureStoragePlugin.set({ key: 'authProvider', value: 'password' });
+      await this.loginUser(userCredential, value);
+      return userCredential;
+    } catch (error) {
+      throw error;
+    }
+  }
 
   async doLogout(): Promise<void> {
     const key = 'authProvider';
@@ -184,16 +161,6 @@ export class AuthService {
     const result = await this.auth.signInWithPopup(provider);
     await SecureStoragePlugin.set({ key: 'authProvider', value: 'facebook' });
     return result;
-    /*return new Promise((resolve, reject) => {
-      const provider = new firebase.auth.FacebookAuthProvider();
-      this.auth.signInWithPopup(provider).then(result => {
-        SecureStoragePlugin.set({ key: 'authProvider', value: 'facebook' })
-          .then(success => resolve(result));
-      }).catch(error => {
-        console.log(error);
-        reject(error);
-      });
-    });*/
   }
 
   isUserFacebookEqual(facebookAuthResponse, firebaseUser): boolean {
@@ -253,16 +220,6 @@ export class AuthService {
     const result = await this.auth.signInWithPopup(provider);
     await SecureStoragePlugin.set({ key: 'authProvider', value: 'google' });
     return result;
-    /*return new Promise((resolve, reject) => {
-      const provider = new firebase.auth.GoogleAuthProvider();
-      this.auth.signInWithPopup(provider).then(result => {
-        SecureStoragePlugin.set({ key: 'authProvider', value: 'google' })
-          .then(success => resolve(result));
-      }).catch(error => {
-        console.log(error);
-        reject(error);
-      });
-    });*/
   }
 
   isUserGoogleEqual(googleAuthResponse, firebaseUser): boolean {
@@ -282,17 +239,20 @@ export class AuthService {
   }
 
   async loginUser(userCredential: firebase.auth.UserCredential, fields?: any) {
+    console.log('loginUser UserCredential', userCredential);
     let user: User;
     if (userCredential.additionalUserInfo.isNewUser) { // Exit if new User
+      console.log('isNewUser');
       user = await this.registerUser(userCredential, fields);
     } else {
+      console.log('isNotNewUser');
       user = await this.user.getUser(userCredential.user.uid).pipe(first()).toPromise();
       user.online = true;
       user.lastActiveDate = new Date(userCredential.user.metadata.lastSignInTime).getTime();
       await this.user.updateUser(user);
+      console.log(user);
     }
     if (user.status !== 'enabled') { // The user is disabled
-      await this.doLogout();
       throw new Error('user_disabled');
     }
     await SecureStoragePlugin.set({ key: 'userInfo', value: JSON.stringify(user) });
@@ -301,13 +261,17 @@ export class AuthService {
   async registerUser(userCredential: firebase.auth.UserCredential, fields: any) {
     if (!userCredential.additionalUserInfo.isNewUser) { return; } // Exit if old User
 
+    console.log('registerUser UserCredential', userCredential);
+
     const userLanguage = window.navigator.language.slice(0, 2);
     const appLanguages = this.utilities.getAppLanguages();
     const appLanguage = (!appLanguages.includes(userLanguage)) ? 'en' : userLanguage;
+    console.log(appLanguage);
 
     const authProvider = await SecureStoragePlugin.get({ key: 'authProvider' });
+    console.log(authProvider);
     const randomAvatarId = this.utilities.randomId(30);
-    let avatars: any | null = {};
+    let avatar: Avatar = {};
     let avatarFile: Blob | null;
     let displayName: string;
 
@@ -318,23 +282,29 @@ export class AuthService {
       avatarFile = await this.utilities.downloadFileFromURL(userCredential.user.photoURL);
       displayName = userCredential.user.displayName;
     } else {
-      avatarFile = null;
-      avatars = null;
+      avatarFile = (fields.avatar) ? await this.photo.getPhotoBlob(fields.avatar) : null;
       displayName = fields.name;
     }
 
+    console.log('avatarFile: ', avatarFile);
+
     if (avatarFile) {
       const avatarSizes = this.utilities.getAvatarSizes();
+      console.log('avatarSizes: ', avatarSizes);
       for (const elem of avatarSizes) {
         const url = await this.utilities.uploadImages(elem, 'users/avatars', randomAvatarId, avatarFile);
-        avatars[elem.size] = url;
+        avatar[elem.size] = url;
       }
+    }
+
+    if (Object.keys(avatar).length === 0) {
+      avatar = null;
     }
 
     const name = await this.utilities.getNamesFromDisplayName(displayName);
 
     const user: User = {
-      avatar: avatars,
+      avatar,
       bgImage: null,
       birthday: null,
       city: '',
@@ -355,7 +325,23 @@ export class AuthService {
     };
 
     await this.user.createUser(user);
-
+    console.log('User: ', user);
     return user;
+  }
+
+  async redirectLoginUser(userCredential: firebase.auth.UserCredential, login?: boolean) {
+    if (userCredential && userCredential instanceof Object && userCredential.user) {
+      if (!userCredential.additionalUserInfo.isNewUser && login) {
+        await this.loginUser(userCredential);
+        return userCredential;
+      } else if (!userCredential.additionalUserInfo.isNewUser && !login) {
+        throw new Error('user_already_registered');
+      } else if (userCredential.additionalUserInfo.isNewUser && login) {
+        throw new Error('user_not_registered');
+      } else if (userCredential.additionalUserInfo.isNewUser && !login) {
+        await this.loginUser(userCredential);
+        return userCredential;
+      }
+    }
   }
 }

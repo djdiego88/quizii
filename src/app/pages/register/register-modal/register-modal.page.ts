@@ -4,21 +4,30 @@ import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, Valid
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ErrorService } from './../../../services/error.service';
+import { UtilitiesService } from './../../../services/utilities.service';
+import { PhotoService } from './../../../services/photo.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { Plugins } from '@capacitor/core';
+const { Toast } = Plugins;
+
 
 @Component({
-  selector: 'app-login-modal',
-  templateUrl: './login-modal.page.html',
-  styleUrls: ['./login-modal.page.scss'],
+  selector: 'app-register-modal',
+  templateUrl: './register-modal.page.html',
+  styleUrls: ['./register-modal.page.scss'],
 })
-export class LoginModalPage implements OnInit {
+export class RegisterModalPage implements OnInit {
 
-  @ViewChild('loginFormRef')
-    loginFormRef: FormGroupDirective;
+  @ViewChild('registerFormRef')
+    registerFormRef: FormGroupDirective;
 
-  loginForm: FormGroup;
+  registerForm: FormGroup;
   errorMessage: string = '';
+  avatarImg: any;
+  avatar: any = null;
+  loading: boolean = false;
 
-  loginMessages = {
+  registerMessages = {
     email: [
       { type: 'required', message: 'Email is required.' },
       { type: 'email', message: 'Please enter a valid email.' },
@@ -26,6 +35,10 @@ export class LoginModalPage implements OnInit {
     password: [
       { type: 'required', message: 'Password is required.' },
       { type: 'minlength', message: 'Password must be at least 5 characters long.' }
+    ],
+    name: [
+      { type: 'required', message: 'Display Name is required.' },
+      { type: 'minlength', message: 'Display Name must be at least 5 characters long.' }
     ]
   };
 
@@ -35,11 +48,14 @@ export class LoginModalPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private error: ErrorService,
+    private utilities: UtilitiesService,
+    private photo: PhotoService,
+    private sanitizer: DomSanitizer,
     public loadingController: LoadingController,
   ) { }
 
   ngOnInit() {
-    this.loginForm = this.formBuilder.group({
+    this.registerForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
         Validators.email,
@@ -48,21 +64,27 @@ export class LoginModalPage implements OnInit {
         Validators.minLength(5),
         Validators.required
       ])),
+      name: new FormControl('', Validators.compose([
+        Validators.minLength(5),
+        Validators.required
+      ])),
     });
   }
 
   sendForm() {
-    this.loginFormRef.onSubmit(undefined);
+    this.registerFormRef.onSubmit(undefined);
   }
 
-  async tryLogin(value) {
+  async tryRegister(value) {
     const loading = await this.loadingController.create({
-      message: 'Logging in on Quizii...'
+      message: 'Signing up on Quizii...'
     });
     this.presentLoading(loading);
-    await this.authService.doLogin(value)
+    value.avatar = this.avatar;
+    await this.authService.doRegister(value)
     .then(userCredential => {
-      console.log('Ejecutó login with email');
+      console.log('Ejecutó register with email');
+      console.log(userCredential);
       //this.router.navigate(['/home']);
     }, err => {
       if (err.message === 'user_disabled') {
@@ -76,8 +98,23 @@ export class LoginModalPage implements OnInit {
     loading.dismiss();
   }
 
-  closeLogin() {
+  closeRegister() {
     this.modalController.dismiss();
+  }
+
+  async uploadAvatar() {
+    const imagePath = await this.photo.getPhotoPath();
+    const safeImagePath = this.sanitizer.bypassSecurityTrustUrl(imagePath);
+    this.loading = false;
+    this.avatarImg = safeImagePath;
+    this.avatar = imagePath;
+  }
+
+  async showToast(message: string) {
+    await Toast.show({
+      text: message,
+      duration: 'long'
+    });
   }
 
   async presentLoading(loading) {

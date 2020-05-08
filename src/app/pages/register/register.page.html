@@ -8,17 +8,17 @@
         <h1>Quizii</h1>
         <p class="ion-no-margin ion-margin-bottom text-size-medium text-weight-600">We recommend using Facebook or Google so you can play against your friends</p>
 
-        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doFacebookLogin()">
+        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doFacebookRegister()">
           <ion-icon slot="start" name="logo-facebook" mode="ios"></ion-icon>
-          Login in with Facebook
+          Sign up with Facebook
         </ion-button>
-        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doGoogleLogin()">
+        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doGoogleRegister()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
-          Login in with Google
+          Sign up with Google
         </ion-button>
-        <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" mode="md" (click)="loginModal()">
+        <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" mode="md" (click)="registerModal()">
           <ion-icon slot="start" name="mail"></ion-icon>
-          Login in with Email
+          Sign up with Email
         </ion-button>
         <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" (click)="doLogout()">
           <ion-icon slot="start" name="exit"></ion-icon>
@@ -29,5 +29,5 @@
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <ion-button expand="full" class="btn-full-footer btn-transparent text-size-small text-weight-600 text-normal" mode="md" routerLink="/register">Create an account</ion-button>
+  <ion-button expand="full" class="btn-full-footer btn-transparent text-size-small text-weight-600 text-normal" mode="md" routerLink="/login">Sign in to your account</ion-button>
 </ion-footer>

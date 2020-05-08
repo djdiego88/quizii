@@ -1,0 +1,68 @@
+<ion-header mode="ios">
+  <ion-toolbar color="tertiary" mode="ios">
+    <ion-buttons slot="end">
+      <ion-button (click)="closeRegister()">
+        <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="long-title">Sign up with Email</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="full-white-box">
+    <ion-row>
+      <ion-col size-sm="8" size-md="4">
+        <form [formGroup]="registerForm" (ngSubmit)="tryRegister(registerForm.value)" #registerFormRef="ngForm">
+          <ion-item>
+            <ion-icon name="mail" slot="start" color="secondary"></ion-icon>
+            <ion-input type="email" inputmode="email" formControlName="email" class="form-control" placeholder="Email" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of registerMessages.email">
+              <div class="error-message" *ngIf="registerForm.get('email').hasError(validation.type) && (registerForm.get('email').dirty || registerForm.get('email').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-icon name="key" slot="start" color="medium"></ion-icon>
+            <ion-input type="password" formControlName="password" class="form-control" placeholder="Password" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of registerMessages.password">
+              <div class="error-message" *ngIf="registerForm.get('password').hasError(validation.type) && (registerForm.get('password').dirty || registerForm.get('password').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item>
+            <ion-icon name="person" slot="start" color="tertiary"></ion-icon>
+            <ion-input type="text" formControlName="name" class="form-control" placeholder="Display Name" required></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of registerMessages.name">
+              <div class="error-message" *ngIf="registerForm.get('name').hasError(validation.type) && (registerForm.get('name').dirty || registerForm.get('name').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+          <ion-item button="true" type="button" (click)="uploadAvatar()">
+            <ion-icon *ngIf="!avatarImg && !loading" name="image" slot="start" color="success"></ion-icon>
+            <ion-spinner *ngIf="loading" slot="start"></ion-spinner>
+            <ion-avatar *ngIf="avatarImg" slot="start">
+              <img [src]="avatarImg" width="24" height="24"/>
+            </ion-avatar>
+            <ion-label>Profile Photo</ion-label>
+          </ion-item>
+          <p *ngIf="errorMessage" class="text-size-small text-weight-500 text-normal">
+            <ion-text color="danger">{{ errorMessage }}</ion-text>
+          </p>
+        </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-footer class="ion-no-border">
+  <ion-button expand="full" class="btn-full-footer text-size-medium text-weight-700 text-uppercase" color="primary" mode="md" [disabled]="!registerForm.valid || loading" (click)="sendForm()">Sign Up</ion-button>
+</ion-footer>

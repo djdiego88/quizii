@@ -27,6 +27,7 @@ export class UserService {
   }
 
   async createUser(user: User) {
+    console.log('createUser');
     const userId = user.id;
     delete user.id;
     return await this.usersCollection.doc(userId).set(user);
