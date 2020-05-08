@@ -52,10 +52,10 @@ export class LoginModalPage implements OnInit {
     this.loginFormRef.onSubmit(undefined);
   }
 
-  tryLogin(value) {
-    this.authService.doLogin(value)
+  async tryLogin(value) {
+    await this.authService.doLogin(value)
     .then(userCredential => {
-      console.log(userCredential);
+    console.log('Ejecutó login with email');
       //this.router.navigate(['/home']);
     }, err => {
       this.errorMessage = err.message;

@@ -34,6 +34,7 @@
     "capacitor-secure-storage-plugin": "^0.4.0",
     "core-js": "^2.5.4",
     "firebase": "^7.14.2",
+    "ngx-cacheable": "^1.4.1",
     "rxjs": "~6.5.1",
     "tslib": "^1.10.0",
     "zone.js": "~0.10.2"

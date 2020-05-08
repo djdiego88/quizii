@@ -26,8 +26,12 @@ export class LoginPage implements OnInit {
       message: 'Please wait...'
     });
     this.presentLoading(loading);
-    const userCredential = await this.auth.doFacebookLogin();
-    console.log(userCredential);
+    try {
+      const userCredential = await this.auth.doFacebookLogin();
+      console.log(userCredential);
+    } catch (error) {
+      console.log(error);
+    }
     loading.dismiss();
   }
 
@@ -36,20 +40,14 @@ export class LoginPage implements OnInit {
       message: 'Please wait...'
     });
     this.presentLoading(loading);
-    const userCredential = await this.auth.doGoogleLogin();
-    console.log(userCredential);
+    try {
+      const userCredential = await this.auth.doGoogleLogin();
+      console.log(userCredential);
+    } catch (error) {
+      console.log(error);
+    }
     loading.dismiss();
   }
-
-  /*async doLogin() {
-    const loading = await this.loadingController.create({
-      message: 'Please wait...'
-    });
-    this.presentLoading(loading);
-    const userCredential = await this.auth.doLogin();
-    console.log(userCredential);
-    loading.dismiss();
-  }*/
 
   doLogout() {
     this.auth.doLogout().then(result => {
