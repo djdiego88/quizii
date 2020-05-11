@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { Plugins, AppState } from '@capacitor/core';
+import { Plugins, AppState, StatusBarStyle } from '@capacitor/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { UserService } from './services/user.service';
 
-const { App } = Plugins;
+const { App, SplashScreen, StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -17,8 +15,6 @@ const { App } = Plugins;
 export class AppComponent {
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar,
     private afAuth: AngularFireAuth,
     private user: UserService
   ) {
@@ -28,17 +24,23 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.afAuth.authState.subscribe(user => {
+        console.log('user', user);
         if (user) {
           App.getState().then(state => {
             this.user.updateUserStatus(user.uid, state.isActive);
           });
           App.addListener('appStateChange', (state: AppState) => {
-            this.user.updateUserStatus(user.uid, state.isActive);
+            if (user) {
+              this.user.updateUserStatus(user.uid, state.isActive);
+            }
           });
         }
       });
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      StatusBar.setStyle({
+        style: StatusBarStyle.Dark
+      });
+      StatusBar.setBackgroundColor({ color: '#46178f'});
+      SplashScreen.hide();
     });
   }
 }

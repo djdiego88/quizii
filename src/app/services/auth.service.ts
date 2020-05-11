@@ -95,6 +95,9 @@ export class AuthService {
     const key = 'authProvider';
     if (this.platform.is('hybrid')) {
       try {
+        await this.user.updateUserStatus((await this.auth.currentUser).uid, false);
+        await this.auth.signOut(); // Unauth with Firebase
+        await SecureStoragePlugin.remove({ key: 'userInfo' });
         const authProvider = await SecureStoragePlugin.get({ key });
         if (authProvider && authProvider.value === 'facebook') {
           await FacebookLogin.logout(); // Unauth with Facebook
@@ -102,13 +105,12 @@ export class AuthService {
           await GoogleAuth.signOut(); // Unauth with Google
         }
         await SecureStoragePlugin.remove({ key });
-        await SecureStoragePlugin.remove({ key: 'userInfo' });
-        await this.auth.signOut(); // Unauth with Firebase
       } catch (err) {
         throw new Error(err);
       }
     } else {
       try {
+        await this.user.updateUserStatus((await this.auth.currentUser).uid, false);
         await SecureStoragePlugin.remove({ key });
         await SecureStoragePlugin.remove({ key: 'userInfo' });
         await this.auth.signOut();

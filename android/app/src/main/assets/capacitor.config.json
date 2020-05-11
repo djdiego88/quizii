@@ -11,5 +11,6 @@
       "serverClientId": "180578467477-nga7p4qt36qn552h4dggsqfet3m0le6i.apps.googleusercontent.com",
       "forceCodeForRefreshToken" : true
     }
-  }
+  },
+  "linuxAndroidStudioPath": "/opt/android-studio/bin/studio.sh"
 }

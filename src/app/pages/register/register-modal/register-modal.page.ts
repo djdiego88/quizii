@@ -7,8 +7,8 @@ import { ErrorService } from './../../../services/error.service';
 import { UtilitiesService } from './../../../services/utilities.service';
 import { PhotoService } from './../../../services/photo.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Plugins } from '@capacitor/core';
-const { Toast } = Plugins;
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+const { Toast, StatusBar } = Plugins;
 
 
 @Component({
@@ -56,6 +56,10 @@ export class RegisterModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    StatusBar.setStyle({
+      style: StatusBarStyle.Dark
+    });
+    StatusBar.setBackgroundColor({ color: '#46178f'});
     this.registerForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,

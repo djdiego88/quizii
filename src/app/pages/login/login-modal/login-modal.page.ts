@@ -4,6 +4,9 @@ import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, Valid
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ErrorService } from './../../../services/error.service';
+import { Plugins, StatusBarStyle } from '@capacitor/core';
+const { StatusBar } = Plugins;
+
 
 @Component({
   selector: 'app-login-modal',
@@ -40,6 +43,10 @@ export class LoginModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    StatusBar.setStyle({
+      style: StatusBarStyle.Dark
+    });
+    StatusBar.setBackgroundColor({ color: '#46178f'});
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
