@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ const { Toast } = Plugins;
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage {
 
   constructor(
     public loadingController: LoadingController,
@@ -22,21 +22,18 @@ export class LoginPage implements OnInit {
     private error: ErrorService
   ) { }
 
-  ngOnInit() {
-  }
-
   async doFacebookLogin() {
     const loading = await this.loadingController.create({
       message: 'Logging in on Quizii...'
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doFacebookAuth(true);
-      console.log(userCredential);
-      //this.router.navigate(['/home']);
+      await this.auth.doFacebookAuth(true);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
+      loading.dismiss();
       if (error.message === 'user_not_registered' || error.message === 'user_disabled') {
         await this.showToast(this.error.getErrorMessage(error.message));
       }
@@ -50,12 +47,12 @@ export class LoginPage implements OnInit {
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doGoogleAuth(true);
-      console.log(userCredential);
-      //this.router.navigate(['/home']);
+      await this.auth.doGoogleAuth(true);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
+      loading.dismiss();
       if (error.message === 'user_not_registered' || error.message === 'user_disabled') {
         await this.showToast(this.error.getErrorMessage(error.message));
       }

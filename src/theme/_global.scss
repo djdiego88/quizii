@@ -25,8 +25,12 @@ h6 {
     font-size: 0.875rem !important;//14px
 }
 
-.text-size-large {
+.text-size-normal {
     font-size: 1rem !important;//16px
+}
+
+.text-size-large {
+    font-size: 1.125rem !important;//18px
 }
 
 .text-weight-300 {
@@ -90,14 +94,14 @@ ion-button {
 }
 
 ion-header ion-toolbar {
-    --min-height: 32px !important;
+    //--min-height: 32px !important;
 
     ion-buttons {
         min-height: 26px;
 
         ion-button {
             height: 24px !important;
-            @extend .text-size-small;
+            @extend .text-size-medium;
             @extend .text-normal; 
             @extend .text-weight-500;
         }
@@ -105,7 +109,7 @@ ion-header ion-toolbar {
 
     ion-title {
         @extend .text-weight-700;
-        @extend .text-size-medium;
+        @extend .text-size-normal;
 
         &.long-title {
             padding-left: 44px;
@@ -128,7 +132,7 @@ ion-header ion-toolbar {
     margin: 0;
 
     &.btn-transparent {
-        --background: rgba(0,0,0,0.6);
+        --background: rgba(0,0,0,0.5);
     }
 }
 
@@ -143,7 +147,7 @@ ion-content {
 
 form {
     ion-item {
-        @extend .text-size-medium;
+        @extend .text-size-normal;
         --padding-start: 8px;
         --padding-end: 8px;
         --min-height: 36px;

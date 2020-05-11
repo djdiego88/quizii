@@ -105,7 +105,6 @@ export class AuthService {
         await SecureStoragePlugin.remove({ key: 'userInfo' });
         await this.auth.signOut(); // Unauth with Firebase
       } catch (err) {
-        console.log(err);
         throw new Error(err);
       }
     } else {
@@ -239,18 +238,14 @@ export class AuthService {
   }
 
   async loginUser(userCredential: firebase.auth.UserCredential, fields?: any) {
-    console.log('loginUser UserCredential', userCredential);
     let user: User;
     if (userCredential.additionalUserInfo.isNewUser) { // Exit if new User
-      console.log('isNewUser');
       user = await this.registerUser(userCredential, fields);
     } else {
-      console.log('isNotNewUser');
       user = await this.user.getUser(userCredential.user.uid).pipe(first()).toPromise();
       user.online = true;
       user.lastActiveDate = new Date(userCredential.user.metadata.lastSignInTime).getTime();
       await this.user.updateUser(user);
-      console.log(user);
     }
     if (user.status !== 'enabled') { // The user is disabled
       throw new Error('user_disabled');
@@ -261,24 +256,19 @@ export class AuthService {
   async registerUser(userCredential: firebase.auth.UserCredential, fields: any) {
     if (!userCredential.additionalUserInfo.isNewUser) { return; } // Exit if old User
 
-    console.log('registerUser UserCredential', userCredential);
-
     const userLanguage = window.navigator.language.slice(0, 2);
     const appLanguages = this.utilities.getAppLanguages();
     const appLanguage = (!appLanguages.includes(userLanguage)) ? 'en' : userLanguage;
-    console.log(appLanguage);
-
     const authProvider = await SecureStoragePlugin.get({ key: 'authProvider' });
-    console.log(authProvider);
     const randomAvatarId = this.utilities.randomId(30);
     let avatar: Avatar = {};
     let avatarFile: Blob | null;
     let displayName: string;
 
-    if (authProvider && authProvider === 'facebook') {
+    if (authProvider && authProvider.value === 'facebook') {
       avatarFile = await this.utilities.downloadFileFromURL(userCredential.user.photoURL + '?height=512&width=512&type=large');
       displayName = userCredential.user.displayName;
-    } else if (authProvider && authProvider === 'google') {
+    } else if (authProvider && authProvider.value === 'google') {
       avatarFile = await this.utilities.downloadFileFromURL(userCredential.user.photoURL);
       displayName = userCredential.user.displayName;
     } else {
@@ -286,11 +276,8 @@ export class AuthService {
       displayName = fields.name;
     }
 
-    console.log('avatarFile: ', avatarFile);
-
     if (avatarFile) {
       const avatarSizes = this.utilities.getAvatarSizes();
-      console.log('avatarSizes: ', avatarSizes);
       for (const elem of avatarSizes) {
         const url = await this.utilities.uploadImages(elem, 'users/avatars', randomAvatarId, avatarFile);
         avatar[elem.size] = url;
@@ -325,7 +312,6 @@ export class AuthService {
     };
 
     await this.user.createUser(user);
-    console.log('User: ', user);
     return user;
   }
 

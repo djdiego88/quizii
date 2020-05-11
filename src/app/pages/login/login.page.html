@@ -1,33 +1,33 @@
 <ion-content [fullscreen]="true" class="fullscreen-bg">
   <ion-grid style="height: 100%">
     <ion-row class="ion-align-items-center ion-justify-content-center ion-text-center" style="height: 100%; flex-direction: column">
-      <ion-col size="8" size-sm="6" size-md="4">
+      <ion-col size="9" size-sm="6" size-md="4">
         <ion-thumbnail class="logo">
           <ion-img [src]="'https://via.placeholder.com/100?text=Quizii'"></ion-img>
         </ion-thumbnail>
         <h1>Quizii</h1>
-        <p class="ion-no-margin ion-margin-bottom text-size-medium text-weight-600">We recommend using Facebook or Google so you can play against your friends</p>
+        <p class="ion-no-margin ion-margin-bottom text-weight-600 text-size-large">We recommend using Facebook or Google so you can play against your friends</p>
 
-        <ion-button expand="full" color="facebook" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doFacebookLogin()">
+        <ion-button expand="full" color="facebook" class="text-size-normal text-weight-600 text-normal" mode="md" size="large" (click)="doFacebookLogin()">
           <ion-icon slot="start" name="logo-facebook" mode="ios"></ion-icon>
           Login in with Facebook
         </ion-button>
-        <ion-button expand="full" color="google" class="text-size-small text-weight-600 text-normal" mode="md" (click)="doGoogleLogin()">
+        <ion-button expand="full" color="google" class="text-size-normal text-weight-600 text-normal" mode="md" size="large" (click)="doGoogleLogin()">
           <ion-icon slot="start" name="logo-google"></ion-icon>
           Login in with Google
         </ion-button>
-        <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" mode="md" (click)="loginModal()">
+        <ion-button expand="full" color="secondary" class="text-size-normal text-weight-600 text-normal" mode="md" size="large" (click)="loginModal()">
           <ion-icon slot="start" name="mail"></ion-icon>
           Login in with Email
         </ion-button>
-        <ion-button expand="full" color="secondary" class="text-size-small text-weight-600 text-normal" (click)="doLogout()">
+        <!--<ion-button expand="full" color="secondary" class="text-size-normal text-weight-600 text-normal" (click)="doLogout()">
           <ion-icon slot="start" name="exit"></ion-icon>
           Logout
-        </ion-button>
+        </ion-button>-->
       </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <ion-button expand="full" class="btn-full-footer btn-transparent text-size-small text-weight-600 text-normal" mode="md" routerLink="/register">Create an account</ion-button>
+  <ion-button expand="full" class="btn-full-footer btn-transparent text-weight-600 text-normal text-size-normal" mode="md" size="large" routerLink="/register">Create an account</ion-button>
 </ion-footer>

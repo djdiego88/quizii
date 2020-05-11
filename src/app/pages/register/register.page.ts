@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { RegisterModalPage } from './register-modal/register-modal.page';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ const { Toast } = Plugins;
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage {
 
   constructor(
     public loadingController: LoadingController,
@@ -22,21 +22,18 @@ export class RegisterPage implements OnInit {
     private error: ErrorService
   ) { }
 
-  ngOnInit() {
-  }
-
   async doFacebookRegister() {
     const loading = await this.loadingController.create({
       message: 'Signing up on Quizii...'
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doFacebookAuth(false);
-      console.log(userCredential);
-      //this.router.navigate(['/home']);
+      await this.auth.doFacebookAuth(false);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
+      loading.dismiss();
       if (error.message === 'user_already_registered' || error.message === 'user_disabled') {
         await this.showToast(this.error.getErrorMessage(error.message));
       }
@@ -50,14 +47,13 @@ export class RegisterPage implements OnInit {
     });
     this.presentLoading(loading);
     try {
-      const userCredential = await this.auth.doGoogleAuth(false);
-      console.log(userCredential);
-      //this.router.navigate(['/home']);
+      await this.auth.doGoogleAuth(false);
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log(error);
       this.doLogout();
+      loading.dismiss();
       if (error.message === 'user_already_registered' || error.message === 'user_disabled') {
-        console.log('error: ', error.message);
         await this.showToast(this.error.getErrorMessage(error.message));
       }
     }

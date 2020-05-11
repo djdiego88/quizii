@@ -62,8 +62,7 @@ export class LoginModalPage implements OnInit {
     this.presentLoading(loading);
     await this.authService.doLogin(value)
     .then(userCredential => {
-      console.log('Ejecutó login with email');
-      //this.router.navigate(['/home']);
+      this.router.navigate(['/home']);
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

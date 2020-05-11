@@ -36,7 +36,7 @@
               </div>
             </ng-container>
           </div>
-          <p *ngIf="errorMessage" class="text-size-small text-weight-500 text-normal">
+          <p *ngIf="errorMessage" class="text-size-medium text-weight-500 text-normal">
             <ion-text color="danger">{{ errorMessage }}</ion-text>
           </p>
         </form>
@@ -45,5 +45,5 @@
   </ion-grid>
 </ion-content>
 <ion-footer class="ion-no-border">
-  <ion-button expand="full" class="btn-full-footer text-size-medium text-weight-700 text-uppercase" color="primary" mode="md" [disabled]="!loginForm.valid" (click)="sendForm()">Log In</ion-button>
+  <ion-button expand="full" class="btn-full-footer text-weight-700 text-uppercase text-size-large" color="primary" mode="md" size="large" [disabled]="!loginForm.valid" (click)="sendForm()">Log In</ion-button>
 </ion-footer>

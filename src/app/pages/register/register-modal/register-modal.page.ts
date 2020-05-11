@@ -83,9 +83,7 @@ export class RegisterModalPage implements OnInit {
     value.avatar = this.avatar;
     await this.authService.doRegister(value)
     .then(userCredential => {
-      console.log('Ejecutó register with email');
-      console.log(userCredential);
-      //this.router.navigate(['/home']);
+      this.router.navigate(['/home']);
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

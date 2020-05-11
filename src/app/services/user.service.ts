@@ -27,16 +27,10 @@ export class UserService {
   }
 
   async createUser(user: User) {
-    console.log('createUser');
     const userId = user.id;
     delete user.id;
     return await this.usersCollection.doc(userId).set(user);
   }
-
-  /*createOther(other: Other) {
-    const otherId = this.firestore.createId();
-    return this.othersCollection.doc(otherId).set(other);
-  }*/
 
   getUser(userId: string) {
     return this.usersCollection.doc(userId).snapshotChanges().pipe(
