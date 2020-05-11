@@ -1,0 +1,24 @@
+ion-header ion-toolbar {
+    //--min-height: 32px !important;
+
+    ion-buttons {
+        min-height: 26px;
+
+        ion-button {
+            height: 24px !important;
+            @extend .text-size-medium;
+            @extend .text-normal; 
+            @extend .text-weight-500;
+        }
+    }
+
+    ion-title {
+        @extend .text-weight-700;
+        @extend .text-size-normal;
+
+        &.long-title {
+            padding-left: 44px;
+            padding-right: 44px;
+        }
+    }
+}

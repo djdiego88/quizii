@@ -1,0 +1,10 @@
+.btn-full-footer {
+    --border-radius: 0;
+    --box-shadow: none;
+    --color: #fff;
+    margin: 0;
+
+    &.btn-transparent {
+        --background: rgba(0,0,0,0.6);
+    }
+}

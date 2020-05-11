@@ -1,0 +1,21 @@
+form {
+    ion-item {
+        @extend .text-size-normal;
+        --padding-start: 8px;
+        --padding-end: 8px;
+        //--min-height: 36px;
+        --inner-padding-end: 8px;
+
+        ion-icon {
+            &[slot="start"] {
+                margin: 6px 0 6px 0;
+                margin-inline-end: 8px;
+            }
+        }
+
+        ion-input {
+            --padding-bottom: 4px !important;
+            --padding-top: 4px !important;
+        }
+    }
+}

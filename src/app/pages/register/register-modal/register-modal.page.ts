@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, ValidationErrors, FormGroupDirective } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -52,6 +52,7 @@ export class RegisterModalPage implements OnInit {
     private photo: PhotoService,
     private sanitizer: DomSanitizer,
     public loadingController: LoadingController,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -83,7 +84,7 @@ export class RegisterModalPage implements OnInit {
     value.avatar = this.avatar;
     await this.authService.doRegister(value)
     .then(userCredential => {
-      this.router.navigate(['/home']);
+      this.ngZone.run(() => this.router.navigate(['/home']));
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

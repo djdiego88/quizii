@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, ValidationErrors, FormGroupDirective } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
@@ -36,6 +36,7 @@ export class LoginModalPage implements OnInit {
     private router: Router,
     private error: ErrorService,
     public loadingController: LoadingController,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit() {
@@ -62,7 +63,7 @@ export class LoginModalPage implements OnInit {
     this.presentLoading(loading);
     await this.authService.doLogin(value)
     .then(userCredential => {
-      this.router.navigate(['/home']);
+      this.ngZone.run(() => this.router.navigate(['/home']));
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

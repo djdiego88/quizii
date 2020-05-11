@@ -56,4 +56,11 @@ export class UserService {
     const user = await this.getUser(userId).pipe(first()).toPromise();
     return (user && user.status === 'enabled') ? true : false;
   }
+
+  async updateUserStatus(userId: string, status: boolean) {
+    return await this.usersCollection.doc(userId).update({
+      lastActiveDate: new Date().getTime(),
+      online: status,
+    });
+  }
 }

@@ -1,0 +1,17 @@
+ion-content {
+    &.fullscreen-bg {
+        --background: url(https://i.picsum.photos/id/1011/5472/3648.jpg) no-repeat center/cover fixed;
+        --color: #fff;
+    }
+
+    .full-white-box {
+        margin-top: 1rem;
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        background-color: #fff;
+    
+        ion-item {
+            --ion-item-background: #fff;
+        }
+    }
+}

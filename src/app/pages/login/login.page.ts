@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { LoadingController, ModalController } from '@ionic/angular';
 import { LoginModalPage } from './login-modal/login-modal.page';
 import { Router } from '@angular/router';
@@ -19,7 +19,8 @@ export class LoginPage {
     private router: Router,
     private auth: AuthService,
     public modalController: ModalController,
-    private error: ErrorService
+    private error: ErrorService,
+    private ngZone: NgZone
   ) { }
 
   async doFacebookLogin() {
@@ -29,7 +30,7 @@ export class LoginPage {
     this.presentLoading(loading);
     try {
       await this.auth.doFacebookAuth(true);
-      this.router.navigate(['/home']);
+      this.ngZone.run(() => this.router.navigate(['/home']));
     } catch (error) {
       console.log(error);
       this.doLogout();
@@ -48,7 +49,7 @@ export class LoginPage {
     this.presentLoading(loading);
     try {
       await this.auth.doGoogleAuth(true);
-      this.router.navigate(['/home']);
+      this.ngZone.run(() => this.router.navigate(['/home']));
     } catch (error) {
       console.log(error);
       this.doLogout();
