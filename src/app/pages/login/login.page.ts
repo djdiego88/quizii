@@ -30,7 +30,7 @@ export class LoginPage {
     this.presentLoading(loading);
     try {
       await this.auth.doFacebookAuth(true);
-      this.ngZone.run(() => this.router.navigate(['/home']));
+      this.ngZone.run(() => this.router.navigate(['/tabs']));
     } catch (error) {
       console.log(error);
       this.doLogout();
@@ -49,7 +49,7 @@ export class LoginPage {
     this.presentLoading(loading);
     try {
       await this.auth.doGoogleAuth(true);
-      this.ngZone.run(() => this.router.navigate(['/home']));
+      this.ngZone.run(() => this.router.navigate(['/tabs']));
     } catch (error) {
       console.log(error);
       this.doLogout();

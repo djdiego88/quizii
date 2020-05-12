@@ -4,9 +4,6 @@ import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, Valid
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ErrorService } from './../../../services/error.service';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-const { StatusBar } = Plugins;
-
 
 @Component({
   selector: 'app-login-modal',
@@ -43,10 +40,6 @@ export class LoginModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    StatusBar.setStyle({
-      style: StatusBarStyle.Dark
-    });
-    StatusBar.setBackgroundColor({ color: '#46178f'});
     this.loginForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -70,7 +63,7 @@ export class LoginModalPage implements OnInit {
     this.presentLoading(loading);
     await this.authService.doLogin(value)
     .then(userCredential => {
-      this.ngZone.run(() => this.router.navigate(['/home']));
+      this.ngZone.run(() => this.router.navigate(['/tabs']));
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

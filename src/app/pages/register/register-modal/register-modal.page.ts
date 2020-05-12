@@ -4,11 +4,10 @@ import { Validators, FormBuilder, FormGroup, FormControl, AbstractControl, Valid
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 import { ErrorService } from './../../../services/error.service';
-import { UtilitiesService } from './../../../services/utilities.service';
 import { PhotoService } from './../../../services/photo.service';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Plugins, StatusBarStyle } from '@capacitor/core';
-const { Toast, StatusBar } = Plugins;
+import { Plugins } from '@capacitor/core';
+const { Toast } = Plugins;
 
 
 @Component({
@@ -48,7 +47,6 @@ export class RegisterModalPage implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private error: ErrorService,
-    private utilities: UtilitiesService,
     private photo: PhotoService,
     private sanitizer: DomSanitizer,
     public loadingController: LoadingController,
@@ -56,10 +54,6 @@ export class RegisterModalPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    StatusBar.setStyle({
-      style: StatusBarStyle.Dark
-    });
-    StatusBar.setBackgroundColor({ color: '#46178f'});
     this.registerForm = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -88,7 +82,7 @@ export class RegisterModalPage implements OnInit {
     value.avatar = this.avatar;
     await this.authService.doRegister(value)
     .then(userCredential => {
-      this.ngZone.run(() => this.router.navigate(['/home']));
+      this.ngZone.run(() => this.router.navigate(['/tabs']));
     }, err => {
       if (err.message === 'user_disabled') {
         this.errorMessage = this.error.getErrorMessage(err.message);

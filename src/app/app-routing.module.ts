@@ -8,8 +8,8 @@ const redirectLoggedInToHome = () => redirectLoggedInTo(['home']);
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    loadChildren: () => import('./pages/tabs/tabs.module').then( m => m.TabsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
   },
   {
     path: 'login',
@@ -20,11 +20,6 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
     ...canActivate(redirectLoggedInToHome)
-  },
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
   },
 ];
 
