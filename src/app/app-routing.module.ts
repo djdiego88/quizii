@@ -21,6 +21,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule),
     ...canActivate(redirectLoggedInToHome)
   },
+  {
+    path: 'play',
+    loadChildren: () => import('./pages/play/play.module').then( m => m.PlayPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
 ];
 
 @NgModule({
