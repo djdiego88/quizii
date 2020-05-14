@@ -26,6 +26,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/play/play.module').then( m => m.PlayPageModule),
     ...canActivate(redirectUnauthorizedToLogin)
   },
+  {
+    path: 'settings',
+    loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule),
+    ...canActivate(redirectUnauthorizedToLogin)
+  },
 ];
 
 @NgModule({

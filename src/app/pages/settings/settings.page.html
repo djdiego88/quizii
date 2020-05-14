@@ -1,0 +1,77 @@
+<ion-header mode="ios">
+  <ion-toolbar color="tertiary" mode="ios">
+    <ion-title>Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Settings</ion-label>
+    </ion-list-header>
+    <ion-grid class="full-white-box wo-margin">
+      <ion-row>
+        <ion-col>
+          <ion-item button="true" type="button" mode="ios">
+            <ion-icon name="language" slot="start" color="primary"></ion-icon>
+            <ion-label>Language</ion-label>
+            <ion-note slot="end" color="medium">Español</ion-note>
+          </ion-item>
+          <ion-item mode="ios" class="hide-arrow">
+            <ion-icon name="volume-high" slot="start" color="secondary"></ion-icon>
+            <ion-label>Sound Effects</ion-label>
+            <ion-toggle color="danger" mode="ios" checked></ion-toggle>
+          </ion-item>
+          <ion-item mode="ios" class="hide-arrow">
+            <ion-icon name="musical-notes" slot="start" color="tertiary"></ion-icon>
+            <ion-label>Music</ion-label>
+            <ion-toggle color="danger" mode="ios" checked></ion-toggle>
+          </ion-item>
+          <ion-item mode="ios" class="hide-arrow">
+            <ion-icon src="/assets/icon/phone-vibration.svg" slot="start" color="success"></ion-icon>
+            <ion-label>Vibration</ion-label>
+            <ion-toggle color="danger" mode="ios" checked></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Account</ion-label>
+    </ion-list-header>
+    <ion-grid class="full-white-box wo-margin">
+      <ion-row>
+        <ion-col>
+          <ion-item button="true" type="button" mode="ios">
+            <ion-icon name="person-circle" slot="start" color="warning"></ion-icon>
+            <ion-label>Edit Profile</ion-label>
+          </ion-item>
+          <ion-item button="true" type="button" mode="ios">
+            <ion-icon name="shield" slot="start" color="danger"></ion-icon>
+            <ion-label>Privacy</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+  <ion-list>
+    <ion-list-header>
+      <ion-label>Other</ion-label>
+    </ion-list-header>
+    <ion-grid class="full-white-box wo-margin">
+      <ion-row>
+        <ion-col>
+          <ion-item button="true" type="button" mode="ios">
+            <ion-icon name="information-circle" slot="start" color="success"></ion-icon>
+            <ion-label>Information</ion-label>
+          </ion-item>
+          <ion-item button="true" type="button" mode="ios" class="hide-arrow">
+            <ion-icon name="exit" slot="start" color="dark"></ion-icon>
+            <ion-label>Log Out</ion-label>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-list>
+</ion-content>

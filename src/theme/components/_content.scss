@@ -9,9 +9,31 @@ ion-content {
         border-top: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         background-color: #fff;
+
+        &.wo-margin {
+            margin-top: 0;
+        }
     
         ion-item {
             --ion-item-background: #fff;
+        }
+    }
+
+    ion-list {
+        ion-list-header {
+            font-weight: 600;
+        }
+    }
+
+    ion-item {
+        font-size: 1rem;
+        font-weight: 500;
+        --padding-start: 0;
+        --ion-safe-area-left: 0;
+
+        &.hide-arrow {
+            --detail-icon-font-size: 0px;
+            --detail-icon-opacity: 0;
         }
     }
 }
